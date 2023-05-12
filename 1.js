@@ -20,22 +20,19 @@ const gameModule = (() => {
       }
 
       if (Math.random() < 0.5) {
-        const botGuess = playerGuess;
-        alert(`Бот угадал! Он забирает ${botGuess} ваших шариков.`);
-        playerBalls -= botGuess;
-        botBalls += botGuess;
+        alert(`Бот угадал! Он забирает все ваши ${playerBalls} шариков.`);
+        botBalls += playerBalls;
+        playerBalls = 0;
       } else {
         const botGuess = Math.floor(Math.random() * (playerBalls - 1)) + 1;
-        if (botGuess === playerGuess) {
-          alert(`Бот угадал! Он забирает ${playerGuess} шариков.`);
-          playerBalls -= playerGuess;
-          botBalls += playerGuess;
+        if (botGuess > playerBalls - 1) {
+          botBalls += playerBalls;
+          playerBalls = 0;
         } else {
-          const botBallsToGive = playerGuess;
-          playerBalls += botBallsToGive;
-          botBalls -= botBallsToGive;
-          alert(`Бот не угадал. Он отдает ${botBallsToGive} ваших шариков.`);
+          playerBalls -= botGuess;
+          botBalls += botGuess;
         }
+        alert(`Бот не угадал. Вы забираете ${botGuess} шариков.`);
       }
 
       if (playerBalls === 0) {
